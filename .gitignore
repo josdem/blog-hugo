@@ -1,5 +1,3 @@
 .hugo_build.lock
 **.swp
 public/
-go.mod
-go.sum
