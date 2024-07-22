@@ -1,4 +1,7 @@
 baseURL = 'https://blog.josdem.io/'
 languageCode = 'en-us'
 title = 'josdem'
-theme = 'beautifulhugo'
+theme = "beautifulhugo"
+
+[Params]
+  logo = "img/avatar-icon.png" # Expecting square dimensions
