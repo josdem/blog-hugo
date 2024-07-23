@@ -5,3 +5,4 @@
   * [Stream Collectors](/techtalk/java/stream_collectors)
   * [Executors](/techtalk/java/executors)
   * [Generics](/techtalk/java/generics)
+  * [Functional Interfaces](/techtalk/java/functional_interfaces)
