@@ -10,3 +10,4 @@
   * [Junit 5](/techtalk/java/junit5)
   * [From Anonymous to Lambda](/techtalk/java/from_anonymous_to_lambda)
   * [JFairy Data Generator](/techtalk/java/jfairy)
+  * [Using Optional](/techtalk/java/optional)
