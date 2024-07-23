@@ -8,3 +8,4 @@
   * [Functional Interfaces](/techtalk/java/functional_interfaces)
   * [Lambda Expressions](/techtalk/java/lambda_expressions)
   * [Junit 5](/techtalk/java/junit5)
+  * [From Anonymous to Lambda](/techtalk/java/from_anonymous_to_lambda)
