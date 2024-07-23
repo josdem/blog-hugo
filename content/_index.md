@@ -11,3 +11,4 @@
   * [From Anonymous to Lambda](/techtalk/java/from_anonymous_to_lambda)
   * [JFairy Data Generator](/techtalk/java/jfairy)
   * [Using Optional](/techtalk/java/optional)
+  * [Builder Desing Pattern](/techtalk/java/builder_design_pattern)

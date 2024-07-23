@@ -21,3 +21,4 @@ There are three main features in Java 8 that I love, one of them is the lambda e
 * [From Anonymous to Lambda](/techtalk/java/from_anonymous_to_lambda)
 * [JFairy Data Generator](/techtalk/java/jfairy)
 * [Using Optional](/techtalk/java/optional)
+* [Builder Desing Pattern](/techtalk/java/builder_design_pattern)
