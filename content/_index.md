@@ -13,3 +13,5 @@
   * [Using Optional](/techtalk/java/optional)
   * [Builder Desing Pattern](/techtalk/java/builder_design_pattern)
   * [Mailosaur Getting Started](/techtalk/java/mailosaur_getting_started)
+  * [GitHub Repository](https://github.com/josdem/java-workshop)
+
