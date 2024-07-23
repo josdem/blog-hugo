@@ -16,3 +16,4 @@ There are three main features in Java 8 that I love, one of them is the lambda e
 * [Executors](/techtalk/java/executors)
 * [Generics](/techtalk/java/generics)
 * [Functional Interfaces](/techtalk/java/functional_interfaces)
+* [Lambda Expressions](/techtalk/java/lambda_expressions)

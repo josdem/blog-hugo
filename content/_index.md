@@ -6,3 +6,4 @@
   * [Executors](/techtalk/java/executors)
   * [Generics](/techtalk/java/generics)
   * [Functional Interfaces](/techtalk/java/functional_interfaces)
+  * [Lambda Expressions](/techtalk/java/lambda_expressions)
