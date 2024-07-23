@@ -10,3 +10,4 @@ There are three main features in Java 8 that I love, one of them is the lambda e
 
 
 * [Java time API](/techtalk/java/java_time_api)
+* [Streams](/techtalk/java/streams)
