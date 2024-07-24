@@ -24,7 +24,7 @@
   * [Spring Boot Bootstrap](/techtalk/spring/spring_boot_bootstrap)
   * [Spring Boot Testing](/techtalk/spring/spring_boot_testing)
   * [Spring Boot Validation](/techtalk/spring/spring_boot_validation)
-  * [Spring Boot Testing Validation](/techtalk/spring/spring_boot_validation_testing)
+  * [Spring Boot Testing Validation](/techtalk/spring/spring_boot_testing_validation)
   * [Spring Boot Security](/techtalk/spring/spring_boot_security)
   * [Spring Boot Security using Database](/techtalk/spring/spring_boot_security_database)
   * [Spring Boot Rest Client](/techtalk/spring/spring_boot_rest_client)
