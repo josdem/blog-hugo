@@ -16,3 +16,4 @@
   * [GitHub Repository](https://github.com/josdem/java-workshop)
 * [**Spring Boot**](/techtalk/spring_boot)
   * [Spring Boot AOP](/techtalk/spring/spring_boot_aop)
+  * [Spring Boot RESTful](/techtalk/spring/spring_boot_restful)

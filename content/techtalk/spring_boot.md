@@ -19,6 +19,7 @@ Open source Java framework used to create micro services but also to create easy
 ## Topics
 
 * [Spring Boot AOP](/techtalk/spring/spring_boot_aop)
+* [Spring Boot RESTful](/techtalk/spring/spring_boot_restful)
 
 This post shows you how to create a simple Spring Boot project with this features:
 
