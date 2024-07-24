@@ -26,7 +26,6 @@ Open source Java framework used to create micro services but also to create easy
 * [Spring Boot Externalization](/techtalk/spring/spring_boot_externalization)
 * [Spring Boot Bootstrap](/techtalk/spring/spring_boot_bootstrap)
 * [Spring Boot Testing](/techtalk/spring/spring_boot_testing)
-* [Spring Boot Bower Plugin](/techtalk/spring/spring_boot_bower_plugin)
 * [Spring Boot Validation](/techtalk/spring/spring_boot_validation)
 * [Spring Boot Testing Validation](/techtalk/spring/spring_boot_validation_testing)
 * [Spring Boot Security](/techtalk/spring/spring_boot_security)
