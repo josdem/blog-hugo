@@ -37,7 +37,7 @@ Open source Java framework used to create micro services but also to create easy
 * [Spring Boot Liquibase](/techtalk/spring/spring_boot_liquibase)
 * [Spring Boot Logback](/techtalk/spring/spring_boot_logback)
 * [Spring Boot Thymeleaf Layouts](/techtalk/spring/spring_boot_thymeleaf_layouts)
-* [Swagger Spring Boot Configuration](/techtalk/spring/spring_swagger_boot_configuration)
+* [Spring Boot Swagger](/techtalk/spring/spring_boot_swagger)
 * [Spring Boot Oauth2 with Google](/techtalk/spring/spring_boot_oauth2)
 * [Spring Boot Geb](/techtalk/spring/spring_boot_geb)
 * [Spring Boot Ehcache](/techtalk/spring/spring_boot_ehcache)
