@@ -185,3 +185,4 @@ To browse the code go [here](https://github.com/josdem/spring-boot-setup), to do
 git clone git@github.com:josdem/spring-boot-setup.git
 ```
 
+[Return to the main article](/)
