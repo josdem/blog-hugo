@@ -15,4 +15,4 @@
   * [Mailosaur Getting Started](/techtalk/java/mailosaur_getting_started)
   * [GitHub Repository](https://github.com/josdem/java-workshop)
 * [**Spring Boot**](/techtalk/spring_boot)
-
+  * [Spring Boot AOP](/techtalk/spring/spring_boot_aop)

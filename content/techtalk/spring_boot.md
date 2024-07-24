@@ -16,6 +16,10 @@ Open source Java framework used to create micro services but also to create easy
 * Very lightweight
 * Easy to test
 
+## Topics
+
+* [Spring Boot AOP](/techtalk/spring/spring_boot_aop)
+
 This post shows you how to create a simple Spring Boot project with this features:
 
 * Gradle Build
