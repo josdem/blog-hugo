@@ -17,3 +17,4 @@
 * [**Spring Boot**](/techtalk/spring_boot)
   * [Spring Boot AOP](/techtalk/spring/spring_boot_aop)
   * [Spring Boot RESTful](/techtalk/spring/spring_boot_restful)
+  * [Spring Boot Handler Exception](/techtalk/spring/spring_boot_handler_exception)
