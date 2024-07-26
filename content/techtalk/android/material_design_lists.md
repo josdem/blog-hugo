@@ -229,7 +229,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
 This is the List view using `RecyclerView`
 
-<img src="/img/techtalks/android/material_design_lists.png">
+![alt](/images/android/material_design_lists.png)
 
 To download the code:
 
