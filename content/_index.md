@@ -67,4 +67,4 @@
   * [Spring Webflux JAXB](/techtalk/spring/spring_webflux_jaxb)
   * [Spring Webflux Constructor Injection](/techtalk/spring/spring_webflux_required_args_constructor)
   * [Spring Webflux WebSockets](/techtalk/spring/spring_webflux_websockets)
-
+* [**Android**](/techtalk/android)
