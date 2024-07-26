@@ -369,7 +369,7 @@ public interface ApplicationComponent {
 
 That's it, we are injecting `UserService` into our `MainActivity` and with that we are getting user data information.
 
-<img src="/img/techtalks/android/dagger.png">
+![alt](/images/android/dagger.png)
 
 To download the code:
 
