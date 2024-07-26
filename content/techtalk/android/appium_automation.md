@@ -21,7 +21,7 @@ Appium was designed to meet mobile automation needs according to a philosophy ou
 
 **Appium Architecture**
 
-<img src="/img/techtalks/android/appium_architecture.png">
+![alt](/images/android/appium_architecture.png)
 
 **Appium Server**
 

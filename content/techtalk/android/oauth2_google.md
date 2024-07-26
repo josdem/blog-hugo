@@ -108,7 +108,7 @@ In the `activity_main.xml` create an Sign-In button and TextView status label co
 </LinearLayout>
 ```
 
-<img src="/img/techtalks/android/oauth2_google_1.png">
+![alt](/images/android/oauth2_google_1.png)
 
 
 This is the MainActivity:
@@ -201,7 +201,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
 This is the Sign-In Google Intent:
 
-<img src="/img/techtalks/android/oauth2_google_2.png">
+![alt](/images/android/oauth2_google_2.png)
 
 1. A `GoogleSignInOptions` object with the `DEFAULT_SIGN_IN` parameter and requesting users' email addresses as well with the `requestEmail()` option.
 2. A `GoogleApiClient` object with access to the Google Sign-In API. `enableAutoManage` requires `FragmentActivity` or `AppCompatActivity` as first parameter and `OnConnectionFailedListener` as second parameter, in our case this will be both our `MainActivity`.
@@ -210,7 +210,7 @@ This is the Sign-In Google Intent:
 
 Here is when we `handleSignInResult`:
 
-<img src="/img/techtalks/android/oauth2_google_3.png">
+![alt](/images/android/oauth2_google_3.png)
 
 To download the code:
 
