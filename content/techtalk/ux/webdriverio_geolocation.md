@@ -50,7 +50,7 @@ class LocationPage {
 module.exports = new LocationPage()
 ```
 
-<img src="/img/techtalks/ux/ann_arbor.png">
+![Ann Arbor](/images/ux/ann_arbor.png)
 
 Let's move our location from Ann Arbor United States to Guadalajara Mexico
 
@@ -98,7 +98,7 @@ class LocationPage {
 module.exports = new LocationPage()
 ```
 
-<img src="/img/techtalks/ux/guadalajara.png">
+![Guadalajara](/images/ux/guadalajara.png)
 
 
 And finally let's move from Mexico to Netherlands, also please notice how here we are externalizing our values in a properties file, so we can avoid hard coding.
@@ -137,7 +137,7 @@ describe("Checking locations", () => {
 })
 ```
 
-<img src="/img/techtalks/ux/amsterdam.png">
+![Amsterdam](/images/ux/amsterdam.png)
 
 You are good to execute this project with: `npx wdio run wdio.conf.js`, and you should see those geolocations in the map. To browse the code go [here](https://github.com/josdem/webdriverio-workshop), to download the project:
 

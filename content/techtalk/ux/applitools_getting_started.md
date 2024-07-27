@@ -193,7 +193,7 @@ module.exports = Object.freeze({
 
 You are good to execute it with: `npx wdio run wdio.conf.js`, and you should see those screenshots stored at your Applitools test results dashboard:
 
-<img src="/img/techtalks/ux/applitools.png">
+![Applitools](/images/ux/applitools.png)
 
 Applitools can also take screenshots from a particular region, this is useful when you might want to focus your test in some particular section of the website. Here is the code:
 
