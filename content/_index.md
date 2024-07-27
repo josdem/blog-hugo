@@ -86,7 +86,7 @@
   * [WebdriverIO Geolocation](/techtalk/ux/webdriverio_geolocation)
   * [WebdriverIO with Cucumber Getting Started](/techtalk/ux/webdriverio_cucumber_getting_started)
   * [WebdriverIO Lighthouse](/techtalk/ux/webdriverio_lighthouse)
-  * [Selenium Cucumber And TestNG](/techtalk/ux/selenium-cucumber-testng)
+  * [Selenium Cucumber And TestNG](/techtalk/ux/selenium_cucumber_testng)
   * [Cypress Getting Started](/techtalk/ux/cypress_getting_started)
   * [Cypress Applitools Integration](/techtalk/ux/cypress_applitools_integration)
   * [Playwright Getting Started](/techtalk/ux/playwright_getting_started)
