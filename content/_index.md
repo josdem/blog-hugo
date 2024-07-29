@@ -92,3 +92,10 @@
   * [Playwright Getting Started](/techtalk/ux/playwright_getting_started)
   * [Playwright Applitools Integration](/techtalk/ux/playwright_applitools_integration)
   * [Playwright Reports Deployment](/techtalk/ux/playwright_reports_deployment)
+* [**Refactoring**](/techtalk/refactoring)
+  * [Duplicated Code](/techtalk/refactoring/duplicated_code)
+  * [Replace Temp With Query](/techtalk/refactoring/replace_temp_with_query)
+  * [Introduce Parameter Object](/techtalk/refactoring/introduce_parameter_object)
+  * [Replace Error Code with Exception](/techtalk/refactoring/replace_error_code_with_exception)
+  * [Replace conditional with polymorphism](/techtalk/refactoring/replace_conditional_with_polymorphism)
+
