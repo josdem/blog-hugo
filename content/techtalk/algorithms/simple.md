@@ -345,7 +345,7 @@ amount = 10
 
 **Explanation**
 
-She can buy the `$2nd$` keyboard and the `$3rd$` USB drive for a total cost of `$8 + 1 = 9$`.
+She can buy the `2nd` keyboard and the `3rd` USB drive for a total cost of `8 + 1 = 9`.
 
 **Solution**
 
