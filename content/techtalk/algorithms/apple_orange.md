@@ -8,7 +8,7 @@ description = "Sam's house has an apple tree and an orange tree that yield an ab
 
 Sam's house has an apple tree and an orange tree that yield an abundance of fruit. Sam’s two children, Larry and Rob, decide to play a game in which they each climb a tree and throw fruit at their (Sam’s) house. Each fruit that lands on the house scores one point for the one who threw it. Larry climbs the tree on the left (the apple), and Rob climbs the one on the right (the orange).
 
-<img src="/img/techtalks/algorithms/apple_orange.png"/>
+![Apple and Orange](/images/algorithms/apple_orange.png)
 
 Larry climbs the apple tree at point , and Rob climbs the orange tree at point . Sam’s house stands between points  and . Values increase from left to right.
 
@@ -16,9 +16,9 @@ You will be given a list of distances the fruits are thrown. Negative distances 
 
 **Constraints**
 
-* `$1 \le s,t,a,b \le 10^5$`
-* `$-10^5 \le d \le 10^5$`
-* `$a \le s \le t \le b$`
+$$1 \le s,t,a,b \le 10^5$$
+$$-10^5 \le d \le 10^5$$
+$$a \le s \le t \le b$$
 
 **Input Format**
 

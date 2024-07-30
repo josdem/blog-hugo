@@ -15,8 +15,8 @@ Automate the rounding process then round a list of grades and print the results.
 
 **Constraints**
 
-$$1 < n < 60$$
-$$0 < grade < 100$$
+$$1 \le n \le 60$$
+$$0 \le grade \le 100$$
 
 **Sample Input**
 
