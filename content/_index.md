@@ -98,4 +98,4 @@
   * [Introduce Parameter Object](/techtalk/refactoring/introduce_parameter_object)
   * [Replace Error Code with Exception](/techtalk/refactoring/replace_error_code_with_exception)
   * [Replace conditional with polymorphism](/techtalk/refactoring/replace_conditional_with_polymorphism)
-
+* [**Algorithms**](/techtalk/algorithms)
