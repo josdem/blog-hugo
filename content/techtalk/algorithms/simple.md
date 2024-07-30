@@ -265,7 +265,7 @@ colors = [10, 20, 20, 10, 10, 30, 50, 10, 20]
 
 **Explanation**
 
-<img src="/img/techtalks/algorithms/sock_merchant.png"/>
+![Sock Merchant](/images/algorithms/sock_merchant.png)
 
 As you can see from the figure above, we can match three pairs of socks.
 

@@ -13,13 +13,13 @@ Given a sentence, check whether it is a [pangram](https://en.wikipedia.org/wiki/
 
 For sentence = "The quick brown fox jumps over the lazy dog.", the output should be
 
-```
+```bash
 isPangram(sentence) = true.
 ```
 
 For sentence = "Hello World!", the output should be
 
-```
+```bash
 isPangram(sentence) = false.
 ```
 
