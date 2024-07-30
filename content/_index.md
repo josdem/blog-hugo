@@ -110,4 +110,8 @@
   * [Apple and Orange](/techtalk/algorithms/apple_orange)
   * [Kangaroo](/techtalk/algorithms/kangaroo)
   * [GitHub Repository](https://github.com/josdem/algorithms-workshop)
+* [**Best Practices**](/techtalk/best_practices)
+  * [Clean Code](/techtalk/best_practices/clean_code)
+  * [Extreme Programming](/techtalk/best_practices/extreme_programming)
+  * [SOLID Principles](/techtalk/best_practices/solid_principles)
 
