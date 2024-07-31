@@ -122,4 +122,5 @@
 * [**Sysadmin**](/techtalk/sysadmin)
   * [Spring Boot in Nginx Server](/techtalk/sysadmin/spring_boot_nginx)
   * [Github Actions Remote Trigger](/techtalk/sysadmin/github_actions_remote_trigger)
+* [Python](/techtalk/python)
 
