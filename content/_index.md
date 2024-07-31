@@ -114,4 +114,4 @@
   * [Clean Code](/techtalk/best_practices/clean_code)
   * [Extreme Programming](/techtalk/best_practices/extreme_programming)
   * [SOLID Principles](/techtalk/best_practices/solid_principles)
-
+* [**Continuous Integration & Delivery**](/techtalk/cicd)
