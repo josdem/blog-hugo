@@ -119,4 +119,7 @@
   * [Building Software with Gradle](/techtalk/cicd/gradle)
   * [Jenkins Shell Execution](/techtalk/cicd/jenkins_shell_execution)
   * [Jenkins Pipeline](/techtalk/cicd/jenkins_pipeline)
+* [**Sysadmin**](/techtalk/sysadmin)
+  * [Spring Boot in Nginx Server](/techtalk/sysadmin/spring_boot_nginx)
+  * [Github Actions Remote Trigger](/techtalk/sysadmin/github_actions_remote_trigger)
 
