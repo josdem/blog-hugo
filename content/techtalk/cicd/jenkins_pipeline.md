@@ -31,7 +31,7 @@ where:
 
 Now lets instruct to Jenkins to obtain your pipeline from Source Control Management (SCM) in this case [Github](https://github.com/)
 
-![SCM definition](/img/techtalks/cicd/pipeline.png)
+![SCM definition](/images/cicd/pipeline.png)
 
 If you save it and click on the `Build Now` button you should be able to see this execution flow in the console output
 
@@ -105,7 +105,7 @@ where:
 * `build job: 'jugoterapia-cucumber'` Build another existing job for running feature testing
 
 
-![Jugoterapia Pipeline](/img/techtalks/cicd/pipeline1.png)
+![Jugoterapia Pipeline](/images/cicd/pipeline1.png)
 
 Another important concept that it might be helpful to know is to write and read values using Groovy and keep them at the script level, you can do this like this:
 
