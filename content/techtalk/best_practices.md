@@ -8,11 +8,11 @@ description = "In software development is really important to use techniques and
 
 *Give me a lever long enough and a fulcrum on which to place it, and I shall move the world. ~ Archimedes.*
 
-Wikipedia defines it as: "method or technique that has consistently shown results superior to those achieved with other means, and that is used as a benchmark."
+Wikipedia defines it as a “method or technique that has consistently shown results superior to those achieved with other means, and that is used as a benchmark.”
 
-In software development is really important to use techniques and methods to garantee quality results in process and products, so I decided to write up the software engineering practices and principles I’ve learned over the years.
+It is really important to use techniques and methods to guarantee quality results in processes and products in software development, so I decided to write up the software engineering practices and principles I’ve learned over the years.
 
-In general this concepts are widely accepted over developers with some experience, some of this concepts are extracted from books, another from posts, other by courses. At the end, what tools and techniques you are using will provide you the resultant achieve in software development.
+In general, these concepts are widely accepted by developers with some experience. Some of these concepts are extracted from books, posts, and courses. In the end, what tools and techniques you are using will provide you with a solution that is easy to maintain and extend.
 
 * [Clean Code](/techtalk/best_practices/clean_code)
 * [Extreme Programming](/techtalk/best_practices/extreme_programming)
