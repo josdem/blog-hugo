@@ -396,11 +396,11 @@ public interface Employee {
 And this two interfaces that extends `Employee` interface:
 
 ```java
-package com.jos.dem.solid.isp;
+package com.josdem.solid.isp;
 
 import java.math.BigDecimal;
 
-public interface Partner extends Employee {
+public interface FullTime extends Employee {
   BigDecimal getProfits();
 }
 ```
@@ -417,33 +417,34 @@ public interface Contractor extends Employee {
 }
 ```
 
-In this case a Partner is a special kind of worker who has a base payment and a profit payment, a contractor is another kind of worker who has base payment and a bonus. Here is the concrete implementations from those interfaces.
+In this case a FullTime is a special kind of worker who has a base payment and a profit payment, a contractor is another kind of worker who has base payment and a bonus. Here is the concrete implementations from those interfaces.
 
 Partner:
 
 ```java
-package com.jos.dem.solid.isp;
+package com.josdem.solid.isp;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
-public class PartnerImpl implements Partner {
+public class FullTimeImpl implements FullTime {
 
   private static final BigDecimal BASE_SALARY = new BigDecimal(100);
   private static final BigDecimal PROFIT_PERCENTAGE = new BigDecimal(20);
-  private Integer hours;
+  private final int hours;
 
-  public PartnerImpl(Integer hours){
+  public FullTimeImpl(Integer hours){
     this.hours = hours;
   }
 
-	@Override
-	public BigDecimal getBaseAmount() {
-		return BASE_SALARY.multiply(new BigDecimal(hours));
-	}
+  @Override
+  public BigDecimal getBaseAmount() {
+    return BASE_SALARY.multiply(new BigDecimal(hours));
+  }
 
-	@Override
-	public BigDecimal getProfits() {
-		return getBaseAmount().multiply(PROFIT_PERCENTAGE).divide(new BigDecimal(100));
+  @Override
+  public BigDecimal getProfits() {
+    return getBaseAmount().multiply(PROFIT_PERCENTAGE).divide(new BigDecimal(100), RoundingMode.HALF_UP);
   }
 
 }
@@ -452,7 +453,7 @@ public class PartnerImpl implements Partner {
 Contractor:
 
 ```java
-package com.jos.dem.solid.isp;
+package com.josdem.solid.isp;
 
 import java.math.BigDecimal;
 
@@ -460,20 +461,20 @@ public  class ContractorImpl implements Contractor {
 
   private static final BigDecimal BASE_SALARY = new BigDecimal(80);
   private static final BigDecimal BASE_BONUS = new BigDecimal(10);
-  private Integer hours;
+  private final int hours;
 
-  public ContractorImpl(Integer hours){
+  public ContractorImpl(int hours){
     this.hours = hours;
   }
 
-	@Override
-	public BigDecimal getBaseAmount() {
-		return BASE_SALARY.multiply(new BigDecimal(hours));
-	}
+  @Override
+  public BigDecimal getBaseAmount() {
+    return BASE_SALARY.multiply(new BigDecimal(hours));
+  }
 
-	@Override
-	public BigDecimal getBonus() {
-		return BASE_BONUS.multiply(new BigDecimal(hours));
+  @Override
+  public BigDecimal getBonus() {
+    return BASE_BONUS.multiply(new BigDecimal(hours));
   }
 
 }
@@ -484,37 +485,38 @@ This strategy represent how we can create several interfaces so our implementati
 Employee Test
 
 ```java
-package com.jos.dem.solid.isp;
+package com.josdem.solid.isp;
 
-import static org.junit.Assert.assertEquals;
+
+import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class EmployeeTest {
 
-  @Test
-  public void shouldGetTotalPartnersAmount(){
-    BigDecimal expectedTotal = new BigDecimal(5400);
-    List<Partner> partners = Arrays.asList(new PartnerImpl(10), new PartnerImpl(15), new PartnerImpl(20));
+    @Test
+    public void shouldGetTotalFullTimeAmount() {
+        BigDecimal expectedTotal = new BigDecimal(5400);
+        List<FullTime> ftes = Arrays.asList(new FullTimeImpl(10), new FullTimeImpl(15), new FullTimeImpl(20));
 
-    assertEquals(expectedTotal, partners.stream()
-      .map(it -> it.getBaseAmount().add(it.getProfits()))
-      .reduce(BigDecimal.ZERO, BigDecimal::add));
-  }
+        assertEquals(expectedTotal, ftes.stream()
+                .map(it -> it.getBaseAmount().add(it.getProfits()))
+                .reduce(BigDecimal.ZERO, BigDecimal::add));
+    }
 
-  @Test
-  public void shouldGetTotalContractorAmount(){
-    BigDecimal expectedTotal = new BigDecimal(4050);
-    List<Contractor> contractors = Arrays.asList(new ContractorImpl(10), new ContractorImpl(15), new ContractorImpl(20));
+    @Test
+    public void shouldGetTotalContractorAmount() {
+        BigDecimal expectedTotal = new BigDecimal(4050);
+        List<Contractor> contractors = Arrays.asList(new ContractorImpl(10), new ContractorImpl(15), new ContractorImpl(20));
 
-    assertEquals(expectedTotal, contractors.stream()
-      .map(it -> it.getBaseAmount().add(it.getBonus()))
-      .reduce(BigDecimal.ZERO, BigDecimal::add));
-  }
+        assertEquals(expectedTotal, contractors.stream()
+                .map(it -> it.getBaseAmount().add(it.getBonus()))
+                .reduce(BigDecimal.ZERO, BigDecimal::add));
+    }
 
 }
 ```
