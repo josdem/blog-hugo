@@ -24,6 +24,7 @@ Let's consider the following car class:
 package com.josdem.solid.srp;
 
 public class Car {
+
   private static final int MAX_FUEL = 40;
   private int fuel = 0;
 
@@ -94,6 +95,7 @@ Here is our car class modified:
 package com.josdem.solid.srp;
 
 public class Car {
+
   private static final int MAX_FUEL = 40;
   private int fuel = 0;
 
@@ -123,6 +125,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class CarTest {
+
     @Test
     @DisplayName("validating a new car")
     void shouldValidateCar(){
@@ -145,7 +148,9 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class FuelPumpTest {
+
     private final FuelPump fuelPump = new FuelPump();
+
     @Test
     @DisplayName("fulling a car")
     void shouldFuelCar() {
