@@ -525,7 +525,7 @@ public class EmployeeTest {
 
 Entities must depend on abstractions not on concretions.
 
-The classical use of this principle is `BeanFactory` in [Spring Framework](https://spring.io/). In Spring, components can work together by simply injected dependencies in other components.
+The classical use of this principle is `BeanFactory` in [Spring Framework](https://spring.io/). In Spring, we can add components by injecting them into other components as dependencies.
 
 Let's consider a `PersonService` and inject a `PersonRepository` as dependency.
 
@@ -581,7 +581,7 @@ public class PersonMemoryRepository implements PersonRepository {
 }
 ```
 
-In this case, we are using an in-memory repository and we can easily change it to a database repository and our service will not notice that change.
+In this case, we are using an `in-memory` repository, which we can easily change to a database repository. From the client's perspective, they will not notice that change.
 
 To browse the project go [here](https://github.com/josdem/solid-workshop), to download the project:
 
@@ -592,14 +592,7 @@ git clone https://github.com/josdem/solid-principles.git
 To run the project using Gradle:
 
 ```bash
-gradle test
+./gradlew test
 ```
-
-To run the project using Maven:
-
-```bash
-mvn test
-```
-
 
 [Return to the main article](/techtalk/best_practices)
