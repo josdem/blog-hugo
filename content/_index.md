@@ -68,7 +68,6 @@
   * [Spring Webflux Constructor Injection](/techtalk/spring/spring_webflux_required_args_constructor)
   * [Spring Webflux WebSockets](/techtalk/spring/spring_webflux_websockets)
 * [**Android**](/techtalk/android)
-  * [Dependency Injection with Dagger](/techtalk/android/dagger2)
   * [REST Calls with Retrofit](/techtalk/android/retrofit)
   * [Material Design Creating Lists](/techtalk/android/material_design_lists)
   * [Material Design Card View](/techtalk/android/material_design_cards)
