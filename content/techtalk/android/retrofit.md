@@ -10,332 +10,134 @@ Retrofit is a HTTP client for Android and Java, it turns your HTTP API into a Ja
 
 ## Setup
 
-Create a new project in android studio with an empty Activity, default options and set the following dependencies in `build.gradle`
+Create a new project in android studio with no Activity, default options and set the following dependencies in `build.gradle.kts`
 
-```groovy
-apply plugin: 'com.android.application'
-
-android {
-  compileSdkVersion 25
-  buildToolsVersion "26.0.0"
-  defaultConfig {
-      applicationId "dem.jos.com.retrofit"
-      minSdkVersion 15
-      targetSdkVersion 25
-      versionCode 1
-      versionName "1.0"
-      testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-  }
-  buildTypes {
-    release {
-      minifyEnabled false
-      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-    }
-  }
-}
-
-dependencies {
-  compile fileTree(dir: 'libs', include: ['*.jar'])
-  androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-      exclude group: 'com.android.support', module: 'support-annotations'
-  })
-  compile 'com.android.support:appcompat-v7:25.3.1'
-  compile 'com.android.support.constraint:constraint-layout:1.0.2'
-  testCompile 'junit:junit:4.12'
-
-  compile 'com.squareup.retrofit2:retrofit:2.3.0'
-  compile 'com.squareup.retrofit2:converter-gson:2.3.0'
-}
+```kotlin
+implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
+implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
 ```
 
 Here we are using [Gson](https://github.com/google/gson) converter to transform the JSON responses to the model classes.
 
-In this example we are going to use a Jugoterapia API to get juice categories: http://jugoterapia.josdem.io/jugoterapia-server/beverage/categories
+In this example we are going to use a [Fruitypedia](https://github.com/josdem/fruitypedia-spring-boot) API to get smoothie categories: https://fruitypedia.josdem.io/categories/en
 
 This is the JSON output
 
 ```json
 [
   {
-    id: 1,
-    name: "Curativos"
+    "id": 5,
+    "name": "Healing"
   },
   {
-    id: 2,
-    name: "Energizantes"
+    "id": 6,
+    "name": "Energy"
   },
   {
-    id: 3,
-    name: "Saludables"
+    "id": 7,
+    "name": "Healthy"
   },
   {
-    id: 4,
-    name: "Estimulantes"
+    "id": 8,
+    "name": "Boost"
   }
 ]
 ```
 
-Let's create a basic model Category class
+Let's create a basic model data `Category` class
 
-```java
-package com.jos.dem.retrofit.model;
+```kotlin
+package com.josdem.retrofit.model
 
-public class Category {
-  private Integer id;
-  private String name;
-
-  public Integer getId() {
-    return id;
-  }
-
-  public void setId(Integer id) {
-    this.id = id;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  @Override
-  public String toString() {
-    return "id: " + this.id + " name: " + this.name;
-  }
-}
+data class Category(
+    val id: Int,
+    val name: String,
+)
 ```
 
-Now we can create the `JugoterapiaService` interface that will embody our HTTP response.
+Now we can create the `FruitypediaService` interface that will embody our HTTP response.
 
-```java
-package com.jos.dem.retrofit.service;
+```kotlin
+package com.josdem.retrofit.service
 
-import com.jos.dem.retrofit.model.Category;
+import com.josdem.retrofit.model.Beverage
+import com.josdem.retrofit.model.Category
+import retrofit2.Response
+import retrofit2.http.GET
+import retrofit2.http.Path
 
-import java.util.List;
+interface FruityService {
 
-import retrofit2.Call;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.GET;
-
-public interface JugoterapiaService {
-
-  @GET("/jugoterapia-server/beverage/categories")
-  public Call<List<Category>> getCategories();
-
-  public static final Retrofit retrofit = new Retrofit.Builder()
-    .baseUrl("http://jugoterapia.josdem.io/")
-    .addConverterFactory(GsonConverterFactory.create())
-    .build();
+    @GET("/categories/{language}")
+    suspend fun getCategories(
+        @Path("language") language: String,
+    ): Response<List<Category>>
 
 }
 ```
 
-Finally we are going to call asynchronously and provide the callback to be executed upon completion.
+Retrofit generates an implementation of the `FruityService` interface, however we need to create a Retrofit builder using a base URL.
 
-```java
-package com.jos.dem.retrofit;
+```kotlin
+package com.josdem.retrofit.service
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
-import com.jos.dem.retrofit.model.Category;
-import com.jos.dem.retrofit.service.JugoterapiaService;
+object RetrofitHelper {
+    private const val BASE_URL = "https://fruitypedia.josdem.io/"
 
-import java.util.List;
+    fun getInstance(): Retrofit {
+        return Retrofit.Builder().baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
+}
+```
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+Finally we are going to call asynchronously using [Kotlin coroutines](https://developer.android.com/kotlin/coroutines). To make it simple from our `MainActivity`
 
-public class MainActivity extends AppCompatActivity {
+```kotlin
+package com.josdem.retrofit
 
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
-    JugoterapiaService jugoterapiaService = JugoterapiaService.retrofit.create(JugoterapiaService.class);
-    Call<List<Category>> call = jugoterapiaService.getCategories();
-    call.enqueue(new Callback<List<Category>>() {
+import android.os.Bundle
+import android.util.Log
+import androidx.activity.ComponentActivity
+import com.josdem.retrofit.service.FruityService
+import com.josdem.retrofit.service.RetrofitHelper
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
+import java.util.Locale
 
-      @Override
-      public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
-        for(Category category: response.body()){
-          Log.d("category", category.toString());
+class MainActivity : ComponentActivity() {
+
+    private val language: String = Locale.getDefault().language
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val fruityService = RetrofitHelper.getInstance().create(FruityService::class.java)
+
+        MainScope().launch {
+            val result = fruityService.getCategories(language)
+            Log.d("categories: ", result.body().toString())
         }
-      }
-
-      @Override
-      public void onFailure(Call<List<Category>> call, Throwable t) {
-        Log.d("error", t.getMessage());
-      }
-    });
-
-  }
-
+    }
 }
 ```
 
 That's it when you run the project, you will see the categories in the logcat Android Monitor.
 
 ```bash
-07-24 21:53:46.364 14516-14516/dem.jos.com.retrofit D/category: id: 1 name: Curativos
-07-24 21:53:46.364 14516-14516/dem.jos.com.retrofit D/category: id: 2 name: Energizantes
-07-24 21:53:46.364 14516-14516/dem.jos.com.retrofit D/category: id: 3 name: Saludables
-07-24 21:53:46.365 14516-14516/dem.jos.com.retrofit D/category: id: 4 name: Estimulantes
+[Category(id=5, name=Healing), Category(id=6, name=Energy), Category(id=7, name=Healthy), Category(id=8, name=Boost)]
 ```
 
-To download the code:
+Here is the complete API just in case you want to take a look: https://fruitypedia.josdem.io/swagger-ui.html
+
+To browse the code go [here](https://github.com/josdem/android-retrofit-workshop), to download the code:
 
 ```bash
-git clone https://github.com/josdem/android-retrofit-workshop.git
-git fetch
-git checkout feature/get
-```
-
-Now, we are going to see what we need to do in order to send a JSON post message, first you need to create a POJO.
-
-```java
-package com.jos.dem.retrofit.model;
-
-public class Credentials {
-
-  private String name;
-  private String email;
-  private String token;
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public String getEmail() {
-    return email;
-  }
-
-  public void setEmail(String email) {
-    this.email = email;
-  }
-
-  public String getToken() {
-    return token;
-  }
-
-  public void setToken(String token) {
-    this.token = token;
-  }
-
-  @Override
-  public String toString() {
-    return "name:" + this.name + " email:" + this.email + " token:" + this.token;
-  }
-
-}
-```
-Then we need to add a `@Post` method in Retrofit service:
-
-```java
-package com.jos.dem.retrofit.service;
-
-import com.jos.dem.retrofit.model.Category;
-import com.jos.dem.retrofit.model.Credentials;
-
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.Body;
-import retrofit2.http.GET;
-import retrofit2.http.Headers;
-import retrofit2.http.POST;
-
-public interface JugoterapiaService {
-
-  @GET("/jugoterapia-server/beverage/categories")
-  public Call<List<Category>> getCategories();
-
-  @Headers("Content-Type: application/json")
-  @POST("http://jugoterapia.josdem.io/auth/validate")
-  public Call<Credentials> sendCredentials(@Body Credentials credentials);
-
-  public static final Retrofit retrofit = new Retrofit.Builder()
-          .baseUrl("http://jugoterapia.josdem.io/")
-          .addConverterFactory(GsonConverterFactory.create())
-          .build();
-
-}
-```
-
-Finally we are going to call asynchronously and provide the callback to be executed upon completion.
-
-```java
-package com.jos.dem.retrofit;
-
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
-
-import com.jos.dem.retrofit.model.Category;
-import com.jos.dem.retrofit.model.Credentials;
-import com.jos.dem.retrofit.service.JugoterapiaService;
-
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-public class MainActivity extends AppCompatActivity {
-
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
-    JugoterapiaService jugoterapiaService = JugoterapiaService.retrofit.create(JugoterapiaService.class);
-
-    Credentials credentials = createCredentials();
-
-    Call<Credentials> call = jugoterapiaService.sendCredentials(credentials);
-    call.enqueue(new Callback<Credentials>() {
-
-      @Override
-      public void onResponse(Call<Credentials> call, Response<Credentials> response) {
-        Log.d("credentials:", response.body().toString());
-      }
-
-      @Override
-      public void onFailure(Call<Credentials> call, Throwable t) {
-        Log.d("error", t.getMessage());
-      }
-    });
-
-  }
-
-  private Credentials createCredentials() {
-    Credentials credentials = new Credentials();
-    credentials.setName("josdem");
-    credentials.setEmail("joseluis.delacruz@gmail.com");
-    credentials.setToken("token");
-    return credentials;
-  }
-
-}
-```
-
-You can browse the code [here](https://github.com/josdem/android-retrofit-workshop), you can download the code here:
-
-```bash
-git clone https://github.com/josdem/android-retrofit-workshop.git
-git fetch
-git checkout feature/post
+git clone git@github.com:josdem/android-retrofit-workshop.git
 ```
 
 [Return to the main article](/techtalk/android)
