@@ -114,7 +114,7 @@ public record PersonController(PersonRepository personRepository,
 }
 ```
 
-In this controller, the `@Valid` annotation from `jakarta.validation` package, you can retrieve all the attributes from the form bound to the `PersonCommand` object. In the code, you check for errors, and if so, send the user back to the original form template. In that situation, all the error attributes are displayed. If all of the user’s attributes are valid, it redirects the browser to the list persons template; otherwise, it will show the form with the error messages.
+In this controller, using the `@Valid` annotation from `jakarta.validation` package, you can retrieve all the attributes from the form bound to the `PersonCommand` object. In the code, you check for errors, and if so, send the user back to the original form template. In that situation, all the error attributes are displayed. If all of the user’s attributes are valid, it redirects the browser to the list persons template; otherwise, it will show the form with the error messages.
 
 ```html
 <!DOCTYPE html>
