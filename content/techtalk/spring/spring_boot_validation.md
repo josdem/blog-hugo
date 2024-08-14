@@ -152,7 +152,7 @@ In this controller, using the `@Valid` annotation from `jakarta.validation` pack
 </html>
 ```
 
-As you can see, the page contains a simple form. Using the Thymeleaf expression `"th:object="${personCommand}"`, it maps the person object with the form. This strategy is known as a "bean-backed" form. They are tagged as `th:field="{nickname}"`. Next to each field is a secondary element used to show any validation errors.
+As you can see, the page contains a simple form. Using the Thymeleaf expression `"th:object="${personCommand}"`, it maps the person object with the form. This strategy is known as a "bean-backed" form. They are tagged as `th:field="{nickname}"`. Next to each field it is a secondary element used to show any validation errors.
 
 ```java
 package com.josdem.springboot.validation.command;
