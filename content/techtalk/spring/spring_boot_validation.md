@@ -2,150 +2,128 @@
 title = "Spring Boot Validation"
 categories = ["techtalk","code","spring boot"]
 tags = ["josdem","techtalks","programming","technology","java validation","spring boot"]
-description = "Spring has a Validation interface that we can use in order to create custom object validation, if some errors occur in the validation process it store them in a BindingResult object so you can test for and retrieve validation errors."
+description = "Spring has a Validation interface that we can use to create custom object validation; if some errors occur in the validation process, it stores them in a BindingResult object so you can test for and retrieve validation errors."
 date = 2024-07-24T12:51:34-04:00
 +++
 
-Spring has a `Validation` interface that we can use in order to create custom object validation, if some errors occur in the validation process it store them in a `BindingResult` object so you can test for and retrieve validation errors. Let's consider the following validator:
+Spring has a `Validation` interface that we can use to create custom object validation; if some errors occur in the validation process, it stores them in a `BindingResult` object so you can test for and retrieve validation errors. Let's consider the following validator implementation:
 
-```groovy
-package com.jos.dem.springboot.validation.validator
+```java
+package com.josdem.springboot.validation.validator;
 
-import org.springframework.validation.Validator
-import org.springframework.validation.Errors
-import org.springframework.stereotype.Component
-
-import com.jos.dem.springboot.validation.command.PersonCommand
+import com.josdem.springboot.validation.command.PersonCommand;
+import org.springframework.validation.Validator;
+import org.springframework.validation.Errors;
+import org.springframework.stereotype.Component;
 
 @Component
-class PersonValidator implements Validator {
+public class PersonValidator implements Validator {
+
+  private final String REGEX = "[0-9]+";
 
   @Override
-  boolean supports(Class<?> clazz) {
-    PersonCommand.class.equals(clazz)
+  public boolean supports(Class<?> clazz) {
+    return PersonCommand.class.equals(clazz);
   }
 
   @Override
-  void validate(Object target, Errors errors) {
-    PersonCommand personCommand = (PersonCommand) target
-    validateEin(errors, personCommand)
+  public void validate(Object target, Errors errors) {
+    PersonCommand personCommand = (PersonCommand) target;
+    validateEin(errors, personCommand);
   }
 
   private void validateEin(Errors errors, PersonCommand command) {
-    if(!command.ein.isNumber()){
-      errors.rejectValue('ein', 'ein.error.format')
+    if(!command.getEin().matches(REGEX)){
+      errors.rejectValue("ein", "ein.error.format");
     }
   }
 
 }
 ```
 
-This class provides validation behaviour implementing `org.springframework.validation.Validator`
+This class provides validation behavior implementing `org.springframework.validation.Validator`
 
 * `supports(Class)` Define which class can be validated
 * `validate(Object, org.springframework.validation.Errors)` Object validation, if some errors occurs store them in `Errors`
-* `validateEin(Errors errors, PersonCommand command)` validates EIN(Employer Identification Number) which should be a digit number.
+* `validateEin(Errors errors, PersonCommand command)` validates EIN(Employer Identification Number) which should be a numeric expression.
 
-```groovy
-package com.jos.dem.springboot.validation.controller
+```java
+package com.josdem.springboot.validation.controller;
 
-import static org.springframework.web.bind.annotation.RequestMethod.GET
-import static org.springframework.web.bind.annotation.RequestMethod.POST
+import com.josdem.springboot.validation.command.PersonCommand;
+import com.josdem.springboot.validation.model.Person;
+import com.josdem.springboot.validation.repository.PersonRepository;
+import com.josdem.springboot.validation.validator.PersonValidator;
+import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
-import javax.validation.Valid
+import java.util.List;
 
-import org.springframework.stereotype.Controller
-import org.springframework.web.servlet.ModelAndView
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.ResponseBody
-import org.springframework.web.bind.annotation.InitBinder
-import org.springframework.web.bind.WebDataBinder
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.validation.BindingResult
-
-import com.jos.dem.springboot.validation.model.Person
-import com.jos.dem.springboot.validation.command.Command
-import com.jos.dem.springboot.validation.command.PersonCommand
-import com.jos.dem.springboot.validation.validator.PersonValidator
-import com.jos.dem.springboot.validation.repository.PersonRepository
-
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
-
+@Slf4j
 @Controller
-@RequestMapping('persons/**')
-class PersonController {
+@RequestMapping("/persons")
+public record PersonController(PersonRepository personRepository,
+                               PersonValidator personValidator) {
 
-  @Autowired
-  PersonRepository personRepository
-  @Autowired
-  PersonValidator personValidator
-
-  Logger log = LoggerFactory.getLogger(this.class)
-
-  @InitBinder
-  private void initBinder(WebDataBinder binder) {
-    binder.addValidators(personValidator)
-  }
-
-  @RequestMapping(method=GET)
-  ModelAndView getAll(){
-    log.info 'Listing all persons'
-    ModelAndView modelAndView = new ModelAndView('persons/list')
-    List<Person> persons = personRepository.findAll()
-    modelAndView.addObject('persons', persons)
-    modelAndView
-  }
-
-  @RequestMapping(value='create', method=GET)
-  ModelAndView create(){
-    log.info 'Creating person'
-    ModelAndView modelAndView = new ModelAndView('persons/create')
-    Command personCommand = new PersonCommand()
-    modelAndView.addObject('personCommand', personCommand)
-    modelAndView
-  }
-
-  @RequestMapping(method=POST)
-  ModelAndView save(@Valid PersonCommand personCommand, BindingResult bindingResult){
-    log.info "Registering new Person: ${personCommand.nickname}"
-    ModelAndView modelAndView = new ModelAndView('persons/list')
-    if(bindingResult.hasErrors()){
-      modelAndView.setViewName('persons/create')
-      modelAndView.addObject('personCommand', personCommand)
-      return modelAndView
+    @InitBinder
+    private void initBinder(WebDataBinder binder) {
+        binder.addValidators(personValidator);
     }
-    Person person = new Person(nickname:personCommand.nickname, email:personCommand.email, ein:personCommand.ein)
-    personRepository.save(person)
-    List<Person> persons = personRepository.findAll()
-    modelAndView.addObject('persons', persons)
-    modelAndView
-  }
+
+    @GetMapping
+    ModelAndView getAll() {
+        log.info("Listing all persons");
+        ModelAndView modelAndView = new ModelAndView("persons/list");
+        List<Person> persons = personRepository.findAll();
+        modelAndView.addObject("persons", persons);
+        return modelAndView;
+    }
+
+    @GetMapping(value = "/create")
+    ModelAndView create() {
+        log.info("Creating person");
+        ModelAndView modelAndView = new ModelAndView("persons/create");
+        modelAndView.addObject("personCommand", new PersonCommand());
+        return modelAndView;
+    }
+
+    @PostMapping
+    ModelAndView save(@Valid PersonCommand personCommand, BindingResult bindingResult) {
+        log.info("Registering new Person: {}", personCommand.getNickname());
+        ModelAndView modelAndView = new ModelAndView("persons/list");
+        if (bindingResult.hasErrors()) {
+            modelAndView.setViewName("persons/create");
+            modelAndView.addObject("personCommand", personCommand);
+            return modelAndView;
+        }
+        Person person = new Person(null, personCommand.getNickname(), personCommand.getEmail(), personCommand.getEin());
+        personRepository.save(person);
+        List<Person> persons = personRepository.findAll();
+        modelAndView.addObject("persons", persons);
+        return modelAndView;
+    }
 
 }
 ```
 
-You can retrieve all the attributes from the form bound to the `PersonCommand` object. In the code, you test for errors, and if so, send the user back to the original form template. In that situation, all the error attributes are displayed.
-
-If all of the user’s attribute are valid, then it redirects the browser to the list persons template.
+In this controller, using the `@Valid` annotation from `jakarta.validation` package, you can retrieve all the attributes from the form bound to the `PersonCommand` object. In the code, you check for errors, and if so, send the user back to the original form template. In that situation, all the error attributes are displayed. If all of the user’s attributes are valid, it redirects the browser to the list persons template; otherwise, it will show the form with the error messages.
 
 ```html
-<html>
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
 <head>
-  <link rel="stylesheet" th:href="@{/assets/third-party/bootstrap/dist/css/bootstrap.min.css}" />
+    <title th:text="#{app.title}"/>
 </head>
 <body>
-  <nav class="navbar navbar-inverse navbar-fixed-top">
-    <h3><font color="white">Spring Boot</font></h3>
-  </nav>
-  <div class="jumbotron">
-    <div class="container">
-      <h1>Welcome!</h1>
-      <p>Spring Boot Validator</p>
-      <a href="https://github.com/josdem/spring-boot-training" class="btn btn-primary btn-lg" role="button">Learn more</a>
-    </div>
-  </div>
-  <div class="container">
+  <h1 th:text="#{person.register}" />
   <form id="create" th:action="@{/persons}" th:object="${personCommand}" method="post">
     <div class="form-group">
       <label class="col-sm-1 col-form-label-lg" for="nickname">Nickname:</label>
@@ -165,150 +143,89 @@ If all of the user’s attribute are valid, then it redirects the browser to the
       <label th:if="${#fields.hasErrors('ein')}" th:errors="*{ein}"></label>
     </div>
     <br/><br/>
-    <button class="btn btn-success" id="btn-success" type="submit">Submit</button>
+    <button type="submit">Submit</button>
   </form>
-  </div>
-  <br/><br/><br/>
   <footer>
-    <nav class="navbar navbar-inverse navbar-fixed-bottom">
-      <a class="navbar-brand" href="https://github.com/josdem/spring-boot-training">josdem 2018</a>
-    </nav>
+      <a href="https://josdem.io/">josdem</a>
   </footer>
 </body>
 </html>
 ```
 
-The page contains a simple form. It is marked as being backed up by the person object that you saw in the GET method in the web controller. This is known as a bean-backed form. You can see them tagged `th:field="{nickname}"`, etc. Next to each field is a secondary element used to show any validation errors.
+As you can see, the page contains a simple form. Using the Thymeleaf expression `"th:object="${personCommand}"`, it maps the person object with the form. This strategy is known as a "bean-backed" form. They are tagged as `th:field="{nickname}"`. Next to each field it is a secondary element used to show any validation errors.
 
-```groovy
-package com.jos.dem.springboot.validation.command
+```java
+package com.josdem.springboot.validation.command;
 
-import javax.validation.constraints.Size
-import javax.validation.constraints.NotNull
-import org.hibernate.validator.constraints.Email
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Size;
+import lombok.Getter;
+import lombok.Setter;
 
-class PersonCommand implements Command {
+@Getter
+@Setter
+public class PersonCommand implements Command {
 
-  @NotNull
-  @Size(min=3, max=50)
-  String nickname
+    @Size(min = 6, max = 50)
+    private String nickname;
 
-  @Email
-  @NotNull
-  @Size(min=1, max=250)
-  String email
+    @Email
+    @Size(min = 6, max = 250)
+    private String email;
 
-  @NotNull
-  @Size(min=9, max=9)
-  String ein
-
-}
-```
-
-In the model `PersonCommand` we defined all fields as not null, size min and max and email validation format using hibernate validator.
-
-`Command` is just a Serializable interface
-
-```groovy
-package com.jos.dem.springboot.validation.command
-
-import java.io.Serializable
-
-interface Command extends Serializable{}
-```
-
-This is the test to cover our custom `PersonValidator`
-
-```groovy
-package com.jos.dem.springboot.validation
-
-import org.springframework.validation.Errors
-
-import com.jos.dem.springboot.validation.command.PersonCommand
-import com.jos.dem.springboot.validation.validator.PersonValidator
-
-import spock.lang.Specification
-
-class PersonValidatorSpec extends Specification {
-
-  PersonValidator validator = new PersonValidator()
-
-  void "should detect EIN error format"(){
-    given:'An EIN format'
-      String ein = 'josdem'
-    and:'A target and a Error'
-      PersonCommand target = Mock(PersonCommand)
-      Errors errors = Mock(Errors)
-    when:'We validate EIN'
-      target.ein >> ein
-      validator.validate(target, errors)
-    then:'We expect an error added'
-      1 * errors.rejectValue('ein','ein.error.format')
-  }
-
-  void "should not detect EIN error format"(){
-    given:'An EIN format'
-      String ein = '123456789'
-    and:'A target and a Error'
-      PersonCommand target = Mock(PersonCommand)
-      Errors errors = Mock(Errors)
-    when:'We validate EIN'
-      target.ein >> ein
-      validator.validate(target, errors)
-    then:'We expect an error added'
-      0 * errors.rejectValue('ein','ein.error.format')
-  }
+    @Size(min = 9, max = 9)
+    private String ein;
 
 }
 ```
 
-Do not forget to add `spock-spring` and `spring-boot-starter-data-jpa` dependencies to your `build.gradle` file. Here is the complete file for you review
+In the domain transfer object `PersonCommand`, we defined all desired field constraints, like minimum and maximum size, and email validation format using the `jakarta.validation` annotation. `Command` is just a Serializable interface.
+
+```java
+package com.josdem.springboot.validation.command;
+
+import java.io.Serializable;
+
+public interface Command extends Serializable {}
+```
+
+Here is the complete `build.gradle` file where you can see dependencies and configuration.
 
 ```groovy
-buildscript {
-  ext {
-    springBootVersion = '2.0.0.RELEASE'
-  }
-  repositories {
-    mavenCentral()
-  }
-  dependencies {
-    classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-  }
-}
-
 plugins {
-  id 'com.craigburke.bower-installer' version '2.5.1'
+  id 'org.springframework.boot' version '3.3.2'
+  id 'io.spring.dependency-management' version '1.1.6'
+  id 'java'
 }
 
-bower {
-  installBase = 'src/main/resources/static/assets/third-party'
-  'bootstrap'('3.3.7'){
-    source '**'
+group = 'com.josdem.springboot.validator'
+version = '0.0.1-SNAPSHOT'
+
+java {
+  toolchain {
+    languageVersion = JavaLanguageVersion.of(21)
   }
 }
 
-apply plugin: 'groovy'
-apply plugin: 'org.springframework.boot'
-apply plugin: 'io.spring.dependency-management'
-
-group = 'com.jos.dem.springboot.validator'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = 1.8
+configurations {
+  compileOnly {
+    extendsFrom annotationProcessor
+  }
+}
 
 repositories {
   mavenCentral()
 }
 
-
 dependencies {
-  compile('org.springframework.boot:spring-boot-starter-web')
-  compile('org.springframework.boot:spring-boot-starter-thymeleaf')
-  compile('org.springframework.boot:spring-boot-starter-data-jpa')
-  compile('mysql:mysql-connector-java:5.1.34')
-  compile('org.codehaus.groovy:groovy')
-  testCompile('org.spockframework:spock-spring:1.1-groovy-2.4')
-  testCompile('org.springframework.boot:spring-boot-starter-test')
+  implementation 'org.springframework.boot:spring-boot-starter-web'
+  implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+  implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+  implementation 'org.springframework.boot:spring-boot-starter-validation'
+  runtimeOnly 'com.mysql:mysql-connector-j'
+  compileOnly 'org.projectlombok:lombok'
+  annotationProcessor 'org.projectlombok:lombok'
+  testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 ```
 
@@ -321,13 +238,13 @@ git clone https://github.com/josdem/spring-boot-validation.git
 To run the project:
 
 ```bash
-gradle bootRun
+./gradlew bootRun
 ```
 
 To test the project:
 
 ```bash
-gradle test
+./gradlew test
 ```
 
 [Return to the main article](/techtalk/spring_boot)

@@ -132,6 +132,42 @@ That's it when you run the project, you will see the categories in the logcat An
 [Category(id=5, name=Healing), Category(id=6, name=Energy), Category(id=7, name=Healthy), Category(id=8, name=Boost)]
 ```
 
+Here is the test case:
+
+```kotlin
+package com.josdem.retrofit
+
+import com.josdem.retrofit.model.Category
+import com.josdem.retrofit.service.FruityService
+import com.josdem.retrofit.service.RetrofitHelper
+import kotlinx.coroutines.test.runTest
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
+import org.junit.Test
+
+import retrofit2.Response
+
+const val LANGUAGE = "en"
+
+class FruityServiceTest {
+
+    private val fruityService: FruityService = RetrofitHelper.getInstance().create(FruityService::class.java)
+
+    private suspend fun getCategories(): Response<List<Category>> {
+        return fruityService.getCategories(LANGUAGE)
+    }
+
+    @Test
+    fun shouldGetCategories() =
+        runTest {
+            val response = getCategories()
+            val categories: List<Category>? = response.body()
+            assertTrue(response.isSuccessful)
+            assertEquals(4, categories?.size)
+        }
+}
+```
+
 Here is the complete API just in case you want to take a look: https://fruitypedia.josdem.io/swagger-ui.html
 
 To browse the code go [here](https://github.com/josdem/android-retrofit-workshop), to download the code:
