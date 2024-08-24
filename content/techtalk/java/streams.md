@@ -3,12 +3,12 @@ title = 'Streams'
 categories = ["techtalk","code","java"]
 tags = ["josdem","techtalks","programming","technology", "streams java", "java"]
 date = 2024-07-23T07:33:53-04:00
-escription = "Stream interface is defined in java.util.stream package. In Java 8, collections will start having methods that return Stream. Streams support Aggregate Operations. The common aggregate operations are filter, map, reduce, find, match and sort."
+description = "The stream interface is defined in the java.util.stream package. Since Java 8, the stream API will use collections to process collections. Streams support aggregate operations. The common aggregate operations are filter, map, reduce, find, match, and sort."
 +++
 
-Stream interface is defined in `java.util.stream package`. In Java 8, collections will start having methods that return Stream. Streams support Aggregate Operations. The common aggregate operations are filter, map, reduce, find, match and sort.
+The stream interface is defined in the `java.util.stream` package. Since Java 8, the stream API will use collections to process collections. Streams support aggregate operations. The common aggregate operations are filter, map, reduce, find, match, and sort.
 
-The `map` method is used to map each element to its corresponding result. The following Java code gets squares of numbers using map.
+The `map` method maps each element to its corresponding result. The following Java code uses the map to get squares of numbers.
 
 ```java
 import java.util.List;
@@ -19,12 +19,12 @@ import java.util.stream.Collectors;
 public class MapSquares {
 
   private List<Integer> square(List<Integer> numbers){
-    return numbers.stream().map(it -> it * it).collect(Collectors.toList());
+    return numbers.stream().map(it -> it * it).toList();
   }
 
   public static void main(String[] args){
-    List<Integer> numbers = Arrays.asList(1,2,3,4,5,6,7,8);
-    List<Integer> result = new MapSquares().square(numbers);
+    var numbers = List.of(1,2,3,4,5,6,7,8);
+    var result = new MapSquares().square(numbers);
     assert result.size() == 8;
     assert result.get(1) == 4;
     assert result.get(3) == 16;
