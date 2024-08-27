@@ -85,7 +85,7 @@ class StreamReductor {
 }
 ```
 
-`Stream.findFirst()` Get the first element of Stream in Java. Let's suppose that we have a List of String and we want to find out the first element which has the length greater than 10.
+`Stream.findFirst()` Get the first element of a Stream in Java with specific criteria. Suppose we have a list of Strings and want to find the first element with a length greater than 10.
 
 ```java
 import java.util.List;
@@ -99,8 +99,8 @@ public class FirstFinder {
   }
 
   public static void main(String[] args){
-    List<String> nicknames = Arrays.asList("josdem","tgrip","erich","martinvilegas","skuarch");
-    String result = new FirstFinder().findFirstLongName(nicknames);
+    var nicknames = Arrays.asList("josdem","tgrip","erich","martinvilegas","skuarch");
+    var result = new FirstFinder().findFirstLongName(nicknames);
     assert "martinvilegas" == result;
   }
 }
