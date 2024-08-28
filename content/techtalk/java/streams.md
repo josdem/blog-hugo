@@ -105,8 +105,7 @@ public class FirstFinder {
   }
 }
 ```
-
-`allMatch`, `anyMatch` and `noneMatch` methods are applied on streams and matches the given Predicate, then returns boolean value.
+The `allMatch`, `anyMatch`, and `noneMatch` methods are applied to streams. They match the given Predicate and then return a boolean value.
 
 ```java
 import java.util.List;
@@ -131,14 +130,14 @@ public class PersonMatcher {
   }
 
   public static void main(String[] args){
-    List<Person> persons = Arrays.asList(
+    var persons = Arrays.asList(
       new Person("josdem", RoleType.DEVELOPER),
-      new Person("tgrip", RoleType.DEVELOPER),
+      new Person("tgtip", RoleType.DEVELOPER),
       new Person("skuarch", RoleType.DEVELOPER)
     );
-    PersonMatcher matcher = new PersonMatcher();
+    var matcher = new PersonMatcher();
 
-    Boolean result = matcher.anyPersonStartsWith(persons, "j");
+    var result = matcher.anyPersonStartsWith(persons, "j");
     assert result;
 
     result = matcher.allAreSameType(persons, RoleType.DEVELOPER);
@@ -168,7 +167,6 @@ enum RoleType {
   DEVELOPER, TESTER
 }
 ```
-
 Finally, let's review how to stream a file. Let's suppose you have a file with this information:
 
 ```bash
