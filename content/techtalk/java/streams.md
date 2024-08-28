@@ -167,7 +167,7 @@ enum RoleType {
   DEVELOPER, TESTER
 }
 ```
-Finally, let's review how to stream a file. Let's suppose you have a file with this information:
+Finally, let's see how to stream a file. Let's suppose you have a file with this information:
 
 ```bash
 josdem
@@ -177,8 +177,7 @@ heryxpc
 jeduan
 tgrip
 ```
-
-And you want to get each line as a String element in a List. In Java 8, you can use `Files.lines` to read file as Stream.
+And you want to get each line as a String element in a List. Then, you can use `Files.lines` to read a file as Stream.
 
 ```java
 import java.util.List;
@@ -191,20 +190,19 @@ import java.util.stream.Collectors;
 public class FileStreamer {
 
   private List<String> read(Path path) throws IOException {
-    return Files.lines(path).collect(Collectors.toList());
+    return Files.lines(path).toList();
   }
-
+  
   public static void main(String[] args) throws IOException {
-    Path path = Paths.get("../resources/nicknames.txt");
-    List<String> result = new FileStreamer().read(path);
+    var path = Paths.get("../resources/nicknames.txt");
+    var result = new FileStreamer().read(path);
     assert result.size() == 6;
     assert result.contains("josdem");
   }
 
 }
 ```
-
-`Stream.iterate` is used to iterate values from a seed to a value defined by an `UnaryOperator` if you want to know more about unary operator, please go to my previous post [Functional Interfaces](https://josdem.io/techtalk/java/functional_interfaces/#Basic_Functional_Interfaces)
+`Stream.iterate` is used to iterate values from a seed to a value defined by a `UnaryOperator`; if you want to know more about unary operator, please go to my previous post [Functional Interfaces](https://josdem.io/techtalk/java/functional_interfaces/#Basic_Functional_Interfaces)
 
 ```java
 import java.util.List;
@@ -231,7 +229,6 @@ public class StreamIterate {
 
 }
 ```
-
 To browse the code go [here](https://github.com/josdem/java-workshop), to download the code:
 
 ```bash
