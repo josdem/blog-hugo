@@ -6,7 +6,7 @@ date = 2024-07-23T07:33:53-04:00
 description = "The stream interface is defined in the java.util.stream package. Since Java 8, the stream API will use collections to process collections. Streams support aggregate operations. The common aggregate operations are filter, map, reduce, find, match, and sort."
 +++
 
-The stream interface is defined in the `java.util.stream` package. Since Java 8, the stream API will use collections to process collections. Streams support aggregate operations. The common aggregate operations are filter, map, reduce, find, match, and sort.
+The stream interface is defined in the `java.util.stream` package. Since Java 8, the stream API will be used to process collections. Streams support aggregate operations. The common aggregate operations are filter, map, reduce, find, match, and sort.
 
 The `map` method maps each element to its corresponding result. The following Java code uses the map to get squares of numbers.
 
