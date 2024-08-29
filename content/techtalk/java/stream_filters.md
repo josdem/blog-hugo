@@ -29,12 +29,9 @@ public class StringFilter {
 }
 ```
 
-(1) After creating a Stream of Strings we filtered by those starts with letter J.
-
-If we want to filter a list, array or map based in any condition, we can do it easily using lambda expression with stream `filter()` method.
+After creating a Stream of Strings, we filtered by those starting with the letter J. If we want to filter a list, array, or map based on any characteristic, we can do it easily using lambda expressions and `filter()`
 
 Here we are filtering a list and then counting the number of elements.
-
 
 ```java
 import java.util.List;
@@ -45,20 +42,17 @@ public class CountFilter {
 
   private Long parse(){
     return Arrays.asList("Java", "C++", "Lisp", "Haskell").
-      stream().filter( p -> p.length() == 4).
-      collect(Collectors.counting());
+      stream().filter( p -> p.length() == 4).count();
   }
 
   public static void main(String[] args){
-    Long result = new CountFilter().parse();
+    var result = new CountFilter().parse();
     assert 2L == result;
   }
 
 }
 ```
-
 Let's review an example using numbers, we want to find the max value from a list.
-
 
 ```java
 import java.util.Arrays;
