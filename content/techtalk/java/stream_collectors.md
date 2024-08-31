@@ -6,24 +6,22 @@ date = 2024-07-23T07:57:38-04:00
 description = "This time I will show you how to use collectors over streams to group by, concatenate, map and list."
 +++
 
-This time I will show you how to use collectors over streams to group by, concatenate, map and list.
+This time, I will show you how to use collectors over streams to group by, concatenate, map, and list.
 
-Convert list elements to a string separated by ','
-
+Example: Convert list elements to a string separated by ','
 ```java
 import java.util.List;
-import java.util.Arrays;
 import java.util.stream.Collectors;
 
 public class StreamToStringConverter {
 
   private String parse(){
-    return Arrays.asList("Java", "C++", "Lisp", "Haskell").
+    return List.of("Java", "C++", "Lisp", "Haskell").
       stream().collect(Collectors.joining(","));
   }
 
   public static void main(String[] args){
-    String result = new StreamToStringConverter().parse();
+    var result = new StreamToStringConverter().parse();
     assert "Java,C++,Lisp,Haskell".equals(result);
   }
 
