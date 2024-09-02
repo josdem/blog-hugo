@@ -27,23 +27,21 @@ public class StreamToStringConverter {
 
 }
 ```
-
-From a list, generate another list where elements length is equals to four.
+From a list, generate another list selecting elements if the string length equals four.
 
 ```java
 import java.util.List;
-import java.util.Arrays;
 import java.util.stream.Collectors;
 
 public class StreamToListConverter {
 
   private List<String> parse(){
-    return Arrays.asList("Java", "C++", "Lisp", "Haskell").
-      stream().filter( it -> it.length() == 4 ).collect(Collectors.toList());  // 1
+    return List.of("Java", "C++", "Lisp", "Haskell").
+      stream().filter( it -> it.length() == 4 ).toList();
   }
 
   public static void main(String[] args){
-    List<String> result = new StreamToListConverter().parse();
+    var result = new StreamToListConverter().parse();
     assert 2 == result.size();
     assert result.contains("Java");
     assert result.contains("Lisp");
@@ -51,11 +49,7 @@ public class StreamToListConverter {
 
 }
 ```
-
-(1) We can use also `Collectors.toSet()`
-
 From a list of strings get a map with string element as key and string length as value
-
 ```java
 import java.util.Map;
 import java.util.Arrays;
