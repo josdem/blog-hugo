@@ -3,12 +3,12 @@ title = "Stream Collectors"
 categories = ["techtalk","code","java"]
 tags = ["josdem","techtalks","programming","technology", "Java", "streams java", "collectors java"]
 date = 2024-07-23T07:57:38-04:00
-description = "This time I will show you how to use collectors over streams to group by, concatenate, map and list."
+description = "This time, I will show you how to manipulate collectors using streams to group by, concatenate, map, and list."
 +++
 
-This time, I will show you how to use collectors over streams to group by, concatenate, map, and list.
+This time, I will show you how to manipulate collectors using streams to group by, concatenate, map, and list.
 
-Example: Convert list elements to a string separated by ','
+Example: Convert a list of elements to a string separated by ','
 ```java
 import java.util.List;
 import java.util.stream.Collectors;
