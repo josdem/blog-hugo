@@ -3,10 +3,10 @@ title = "Stream Collectors"
 categories = ["techtalk","code","java"]
 tags = ["josdem","techtalks","programming","technology", "Java", "streams java", "collectors java"]
 date = 2024-07-23T07:57:38-04:00
-description = "This time, I will show you how to manipulate collectors using streams to group by, concatenate, map, and list."
+description = "This time, I will show you how to use collectors along with streams to group by, concatenate, map, and list."
 +++
 
-This time, I will show you how to manipulate collectors using streams to group by, concatenate, map, and list.
+This time, I will show you how to use collectors along with streams to group by, concatenate, map, and list.
 
 Example: Convert a list of elements to a string separated by ','
 ```java
@@ -75,16 +75,13 @@ public class StreamToMapConverter {
 }
 ```
 
-`Function.identity()` is just a shortcut for defining function that accepts and return the same value;
+`Function.identity()` is a convenient way to express a function returning the same value as the input. This is useful when a function is expected, but you do not want to perform any operation to transform the input. `String::length` is a shortcut to call a class method directly; this behaves exactly as the lambda expression `it -> it.lenght()`
 
-`String::length` is a shortcut to define object type and method to return
-
-From a list of persons, group by role
+Example: From a list of persons, group by role.
 
 ```java
 import java.util.List;
 import java.util.Map;
-import java.util.Arrays;
 import java.util.stream.Collectors;
 
 public class GroupByCollector {
@@ -94,12 +91,12 @@ public class GroupByCollector {
   }
 
   public static void main(String[] args){
-    List<Person> persons = Arrays.asList(
+    var persons = List.of(
       new Person("josdem", RoleType.DEVELOPER),
       new Person("tgtip", RoleType.DEVELOPER),
       new Person("erich", RoleType.TESTER)
     );
-    Map<RoleType, List<Person>> result = new GroupByCollector().parse(persons);
+    var result = new GroupByCollector().parse(persons);
     assert result.get(RoleType.DEVELOPER).size() == 2;
     assert result.get(RoleType.TESTER).size() == 1;
   }
