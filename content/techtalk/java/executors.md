@@ -2,26 +2,20 @@
 itle = "Executors"
 tags = ["josdem", "techtalks","programming","technology","java"]
 categories = ["techtalk", "code","java"]
-description = "Executors is part of concurrency Java API, and it is a high level manging threads. Executors typically manage a pool of threads."
+description = "Executors are part of concurrent Java API, and the intention is to have a high-level managing thread; therefore, executors typically manage a pool of threads."
 date = 2024-07-23T09:25:01-04:00
 +++
 
-Executors is part of concurrency Java API, and it is a high level manging threads. Executors typically manage a pool of threads.
-
+Executors are part of concurrent Java API, and the intention is to have a high-level managing thread; therefore, executors typically manage a pool of threads.
 ```java
 ExecutorService executor = Executors.newFixedThreadPool(3);
 ```
-
-In previous code we are creating a thread-pool with 3 threads. You should stop executors, otherwise they keep listening for new tasks, the preferred way to do it is following this recipe:
-
+In the previous code, we created a thread pool with three threads of capacity. It would be best if you stopped executors at some point; otherwise, they will keep listening for new tasks; the most popular way to do it is using the following recipe:
 ```java
 executor.shutdown();
 executor.awaitTermination(MAX_PERIOD_TIME, TimeUnit.SECONDS);
 ```
-
-Executor shuts down softly by waiting a certain amount of time for termination in current running tasks. After `MAX_PERIOD_TIME` seconds executor finally shuts down by interrupting all tasks running. Here is the most simpliest executor example:
-
-
+The executor shuts down softly, waiting a specific time to terminate current running tasks. After `MAX_PERIOD_TIME` in seconds, the executor finally shuts down by interrupting all tasks running. Here is the simplest executor example:
 ```java
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -51,7 +45,6 @@ public class ExecutorExample {
   }
 }
 ```
-
 While you are working in executors you need to use atomic operations, this is one of the most common atomic variable classes `AtomicInteger`, internally it has a int value and has atomic operations like `incrementAndGet()`:
 
 ```java
