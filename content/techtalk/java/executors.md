@@ -5,47 +5,36 @@ categories = ["techtalk", "code","java"]
 description = "Executors are part of concurrent Java API, and the intention is to have a high-level managing thread; therefore, executors typically manage a pool of threads."
 date = 2024-07-23T09:25:01-04:00
 +++
-
 Executors are part of concurrent Java API, and the intention is to have a high-level managing thread; therefore, executors typically manage a pool of threads.
 ```java
 ExecutorService executor = Executors.newFixedThreadPool(3);
 ```
-In the previous code, we created a thread pool with three threads of capacity. It would be best if you stopped executors at some point; otherwise, they will keep listening for new tasks; the most popular way to do it is using the following recipe:
+In the previous code, we created a thread pool with three threads of capacity. It would be best if you stopped executors at some point; otherwise, they will keep listening for new tasks; the usual way to stop it is:
 ```java
 executor.shutdown();
-executor.awaitTermination(MAX_PERIOD_TIME, TimeUnit.SECONDS);
 ```
-The executor shuts down softly, waiting a specific time to terminate current running tasks. After `MAX_PERIOD_TIME` in seconds, the executor finally shuts down by interrupting all tasks running. Here is the simplest executor example:
+Here is a simple executor example:
 ```java
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
 public class ExecutorExample {
-
-  private static final Integer MAX_PERIOD_TIME = 30;
 
   private ExecutorService executor = Executors.newSingleThreadExecutor();
 
   private void start() throws InterruptedException {
-    executor.execute(this::task);
+    executor.execute(task);
     executor.shutdown();
-    executor.awaitTermination(MAX_PERIOD_TIME, TimeUnit.SECONDS);
   }
 
-  private Runnable task() {
-
-    return () -> {
-      System.out.println("Asynchronous task");
-    };
-  }
+  private Runnable task = () -> System.out.println("Asynchronous task");
 
   public static void main(String[] args) throws InterruptedException {
     new ExecutorExample().start();
   }
 }
 ```
-While you are working in executors you need to use atomic operations, this is one of the most common atomic variable classes `AtomicInteger`, internally it has a int value and has atomic operations like `incrementAndGet()`:
+Sometimes, when you are working with executors, you need to use atomic operations; this is an example using `AtomicInteger`; internally, it has an int value and has atomic operations like `incrementAndGet()`:
 
 ```java
 import java.util.concurrent.ExecutorService;
@@ -56,20 +45,19 @@ import java.util.stream.IntStream;
 
 public class ExecutorAtomic {
 
-  private static final Integer MAX_PERIOD_TIME = 30;
+  private static final Integer MAX_PERIOD_TIME = 5;
   private AtomicInteger atomic = new AtomicInteger(0);
   private ExecutorService executor = Executors.newFixedThreadPool(3);
 
   private Integer start() throws InterruptedException {
     IntStream.range(0, 3).forEach(i -> executor.execute(atomic::incrementAndGet));
     executor.shutdown();
-
     executor.awaitTermination(MAX_PERIOD_TIME, TimeUnit.SECONDS);
     return atomic.get();
   }
 
   public static void main(String[] args) throws InterruptedException {
-    Integer result = new ExecutorAtomic().start();
+    var result = new ExecutorAtomic().start();
     assert result == 3;
   }
 }
