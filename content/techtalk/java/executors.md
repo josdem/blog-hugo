@@ -65,20 +65,24 @@ public class ExecutorAtomic {
 
 **Callables and Futures**
 
-Executors support another kind of task named Callable, which is a functional interface just like runnables but instead of being void they return a value. Callables can be submitted to executor services. Since `submit()` doesn't wait until the task completes, the executor service cannot return the result of the callable directly. Instead the executor returns a special result of type Future which can be used to retrieve the actual result at a later point in time.
+Executors support another kind of task named Callable, which is a functional interface just like runnable, but instead of being void, they return a value. Callables can be submitted to executor services. Since the `submit()` method doesn’t wait until the task is completed, the executor service cannot return the callable result directly. Instead, the executor returns a particular result of type `Future`, which can be used to retrieve the actual result at a later point in time.
 
 ```java
-import java.util.concurrent.*;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public class ExecutorCallable {
 
-  private static final Integer MAX_PERIOD_TIME = 30;
+  private static final Integer MAX_PERIOD_TIME = 10;
 
   private ExecutorService executor = Executors.newFixedThreadPool(3);
 
   private Integer start() throws InterruptedException, ExecutionException {
-    Future<Integer> future = executor.submit(new CallableThread());
-    final Integer result = future.get();
+    var future = executor.submit(new CallableThread());
+    final var result = future.get();
     executor.shutdown();
 
     executor.awaitTermination(MAX_PERIOD_TIME, TimeUnit.SECONDS);
@@ -86,7 +90,7 @@ public class ExecutorCallable {
   }
 
   public static void main(String[] args) throws InterruptedException, ExecutionException {
-    Integer result = new ExecutorCallable().start();
+    var result = new ExecutorCallable().start();
     assert result == 3;
   }
 }
@@ -95,7 +99,7 @@ class CallableThread implements Callable<Integer> {
 
   @Override
   public Integer call() throws InterruptedException {
-    final Integer wait = 3;
+    final var wait = 3;
     TimeUnit.SECONDS.sleep(wait);
     return wait;
   }
