@@ -105,48 +105,7 @@ class CallableThread implements Callable<Integer> {
   }
 }
 ```
-
-Since Java 8, the `CompletableFuture` class was introduced and also implements this `Future` interface. It provides an `isDone()` method to check whether the computation is done or not, and a `get()` method to retrieve the result of the computation when it is done.
-
-```java
-import java.util.concurrent.*;
-
-public class ExecutorCompletableFuture {
-
-  private static final Integer MAX_PERIOD_TIME = 30;
-
-  private ExecutorService executor = Executors.newFixedThreadPool(3);
-
-  private Integer start() throws InterruptedException, ExecutionException {
-    CompletableFuture<Integer> completableFuture = new CompletableFuture<>();
-
-    executor.submit(
-        () -> {
-          try {
-            final Integer wait = 3;
-            completableFuture.complete(wait);
-            TimeUnit.SECONDS.sleep(wait);
-          } catch (InterruptedException ie) {
-            ie.printStackTrace();
-          }
-        });
-
-    final Integer result = completableFuture.get();
-    executor.shutdown();
-
-    executor.awaitTermination(MAX_PERIOD_TIME, TimeUnit.SECONDS);
-    return result;
-  }
-
-  public static void main(String[] args) throws InterruptedException, ExecutionException {
-    Integer result = new ExecutorCompletableFuture().start();
-    assert result == 3;
-  }
-}
-```
-
-A cool functionality is to use asynchronous staic methods such as `runAsync`, `supplyAsync` and `thenApplyAsync`. If you want to run some background task asynchronously and don’t want to return anything from the task, then you can use `runAsync()`. It returns `CompletableFuture<Void>`
-
+Since Java 8, the `CompletableFuture` class was introduced and also implements this `Future` interface. A cool functionality is to use asynchronous static methods such as `runAsync`, `supplyAsync` and `thenApplyAsync`. If you want to run some background task asynchronously and don’t want to return anything from the task, then you can use `runAsync()`. It returns `CompletableFuture<Void>`
 ```java
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -154,26 +113,24 @@ import java.util.concurrent.TimeUnit;
 
 public class CompletableFutureRunAsync {
 
-  private void start() throws InterruptedException, ExecutionException {
-    CompletableFuture<Void> completableFuture =
-        CompletableFuture.runAsync(
-            () -> {
-              try {
-                TimeUnit.SECONDS.sleep(3);
-              } catch (InterruptedException ie) {
-                ie.printStackTrace();
-              }
-            });
-    completableFuture.get();
-  }
+  private final static int SLEEP_TIME = 3;
+
+  private CompletableFuture<Void> completableFuture = CompletableFuture.runAsync(() -> {
+    try {
+      TimeUnit.SECONDS.sleep(SLEEP_TIME);
+    } catch (InterruptedException ie) {
+      ie.printStackTrace();
+    }
+  });
 
   public static void main(String[] args) throws InterruptedException, ExecutionException {
-    new CompletableFutureRunAsync().start();
+    var future = new CompletableFutureRunAsync().completableFuture;
+    future.join();
+    assert future.isDone();
   }
 }
 ```
-
-`CompletableFuture.supplyAsync()` is used when you want to provide a value using a `Supplier<T>` running a taks that is asynchronously completed, then use that value in a function with `thenApply()` method
+In this example, the `runAsync()` method runs a task asynchronously, and with method `join()`, we wait until the task is completed. `CompletableFuture.supplyAsync()` is used when you want to provide a value using a `Supplier<T>` running a taks that is asynchronously completed, then use that value in a function with `thenApply()` method
 
 
 ```java
