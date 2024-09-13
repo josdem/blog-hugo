@@ -1,5 +1,5 @@
 +++
-itle = "Executors"
+title = "Executors"
 tags = ["josdem", "techtalks","programming","technology","java"]
 categories = ["techtalk", "code","java"]
 description = "Executors are part of concurrent Java API, and the intention is to have a high-level managing thread; therefore, executors typically manage a pool of threads."
