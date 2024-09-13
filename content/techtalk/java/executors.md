@@ -130,9 +130,7 @@ public class CompletableFutureRunAsync {
   }
 }
 ```
-In this example, the `runAsync()` method runs a task asynchronously, and with method `join()`, we wait until the task is completed. `CompletableFuture.supplyAsync()` is used when you want to provide a value using a `Supplier<T>` running a taks that is asynchronously completed, then use that value in a function with `thenApply()` method
-
-
+In this example, the `runAsync()` method runs a task asynchronously, and with method `join()`, we wait until the task is completed. `CompletableFuture.supplyAsync()` is used when you want to provide a value using a `Supplier<T>` running a task that is asynchronously completed, then use that value in a function with the `thenApply()` method.
 ```java
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -145,13 +143,12 @@ public class CompletableFutureSupplyAsync {
     final Supplier<String> supplier = () -> "hello";
     final Function<String, String> function = value -> value + " world";
 
-    CompletableFuture<String> completableFuture =
-        CompletableFuture.supplyAsync(supplier).thenApply(function);
+    var completableFuture = CompletableFuture.supplyAsync(supplier).thenApply(function);
     return completableFuture.get();
   }
 
   public static void main(String[] args) throws InterruptedException, ExecutionException {
-    String result = new CompletableFutureSupplyAsync().start();
+    var result = new CompletableFutureSupplyAsync().start();
     assert result.equals("hello world");
   }
 }
