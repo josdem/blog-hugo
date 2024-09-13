@@ -153,9 +153,7 @@ public class CompletableFutureSupplyAsync {
   }
 }
 ```
-
-If you want to run async logic in a separate `CompletableFuture` you can use `thenApplyAsync()`
-
+If you want to run async logic in a separate `CompletableFuture`, then you can use `thenApplyAsync()`
 ```java
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -165,33 +163,26 @@ public class CompletableFutureThenApplyAsync {
 
   private String start() throws InterruptedException, ExecutionException {
     final Supplier<String> supplier = () -> "hello";
-    CompletableFuture<String> completableFuture = CompletableFuture.supplyAsync(supplier);
-
-    CompletableFuture<String> future = completableFuture.thenApplyAsync(value -> value + " world");
+    final CompletableFuture<String> completableFuture = CompletableFuture.supplyAsync(supplier);
+    final CompletableFuture<String> future = completableFuture.thenApplyAsync(value -> value + " world");
 
     return future.get();
   }
 
   public static void main(String[] args) throws InterruptedException, ExecutionException {
-    String result = new CompletableFutureThenApplyAsync().start();
+    var result = new CompletableFutureThenApplyAsync().start();
     assert result.equals("hello world");
   }
 }
 ```
-
 To browse the project [here](https://github.com/josdem/java-workshop), to download the project:
-
 ```bash
 git clone https://github.com/josdem/java-workshop.git
 cd executors
 ```
-
 To run the code:
-
 ```bash
 javac ${JAVA_PROGRAM}.java
 java -ea ${JAVA_PROGRAM}
 ```
-
-
 [Return to the main article](/techtalk/java)
