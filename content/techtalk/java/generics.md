@@ -5,50 +5,39 @@ categories = ["techtalk", "code","java"]
 description =  "Generics is a great way to prevent bugs at compilation time since provide compile-time type checking and removing risk of ClassCastException that was common while working with collection classes. Another important advantage in using generics is that you can write code that use abstractions instead using concrete classes, so you can create maintainable and extendable code."
 date = 2024-07-23T09:27:34-04:00
 +++
+Generics are a great way to prevent bugs at runtime since they provide compile-time type checking and promote cast elimination. Another important advantage of using generics is that you can write code that uses abstractions instead of concrete classes, so you can create maintainable and extendable code.
 
-Generics is a great way to prevent bugs at compilation time since provide compile-time type checking and removing risk of `ClassCastException` that was common while working with collection classes. Another important advantage in using generics is that you can write code that use abstractions instead using concrete classes, so you can create maintainable and extendable code.
-
-Following example illustrates how we can print an array containing different types using a single Generic method:
-
+The following example shows how we can print a collection containing different types using generics:
 ```java
 import java.util.List;
 import java.util.Arrays;
-
 public class ListPrinter {
 
   private <T> void printList(List<T> collection){
     for(T item: collection){
       System.out.printf("%s ", item);
     }
-    System.out.println();
   }
 
   public static void main(String[] args){
-    List<Integer> integers = Arrays.asList(1,2,3,4,5);
-    List<Double> doubles = Arrays.asList(1.1,2.2,3.3,4.4,5.5);
-    List<Character> string = Arrays.asList('J','O','S','D','E','M');
-    ListPrinter printer = new ListPrinter();
-    System.out.println("Printing integers");
+    var integers = List.of(1,2,3,4,5);
+    var doubles = List.of(1.1,2.2,3.3,4.4,5.5);
+    var chars = List.of('J','O','S','D','E','M');
+    var printer = new ListPrinter();
     printer.printList(integers);
-    System.out.println("Printing doubles");
+    System.out.println();
     printer.printList(doubles);
-    System.out.println("Printing string");
-    printer.printList(string);
+    System.out.println();
+    printer.printList(chars);
   }
 }
 ```
-
 Output:
-
 ```bash
-Printing integers
 1 2 3 4 5
-Printing doubles
 1.1 2.2 3.3 4.4 5.5
-Printing string
 J O S D E M
 ```
-
 Now let's create a generic type that can receive different object types. Imagine you can store String and Integer types in the same generic object.
 
 ```groovy
