@@ -38,60 +38,9 @@ Output:
 1.1 2.2 3.3 4.4 5.5
 J O S D E M
 ```
-Now let's create a generic type that can receive different object types. Imagine you can store String and Integer types in the same generic object.
+### Generic Type Naming Convention
 
-```groovy
-package com.jos.dem.generics
-
-import spock.lang.Specification
-
-class GenericsTypeSpec extends Specification {
-
-  void "should create a generic type and cast to string"(){
-    given:'A generic type'
-      GenericType<String> type = new GenericType<String>()
-    when:'I create a string type'
-      type.set('josdem');
-    then:'I expect to get the string'
-      'josdem' == type.get();
-  }
-
-  void "should support string and integer types"(){
-    given:'A generic type'
-      GenericType type = new GenericType()
-    when:'I create a string and integer type'
-      type.set('josdem');
-      type.set(7);
-    then:'I expect to get integer'
-      7 == type.get();
-  }
-
-}
-```
-
-GenericType implementation:
-
-```java
-package com.jos.dem.generics;
-
-public class GenericType<T> {
-
-  private T type;
-
-  public T get(){
-    return this.type;
-  }
-
-  public void set(T type){
-    this.type = type;
-  }
-
-}
-```
-
-**Generic Type Naming Convention**
-
-Java Generic Type Naming convention helps us understanding code easily and having a naming convention is one of the best practices of java programming language. Type parameter names are uppercase letters to make it easily distinguishable from java variables. The most commonly used type parameter names are:
+Java Generic Type Naming convention helps us understand code easily, and having a naming convention is one of the best practices of Java programming language. Type parameter names are uppercase letters, making them easily distinguishable from Java variables. The most commonly used type parameter names are:
 
 * E – Element (used extensively by the Java Collections, for example List, Set etc.)
 * K – Key (Used in Map)
@@ -100,15 +49,14 @@ Java Generic Type Naming convention helps us understanding code easily and havin
 * V – Value (Used in Map)
 * S, U. – 2nd, 3rd types
 
-**Bounded Type Parameters**
+### Bounded Type Parameters
 
-What you should do when you want to restrict the types that can be used as type arguments in a parameterized type. Let's consider the following example:
-
+What should you do when you want to restrict the types that can be used as type arguments in a parameterized type? Let's consider the following example:
 ```java
 package com.jos.dem.generics;
 
 public class NaturalNumber<N extends Number> {
-  private N number;
+  private final N number;
 
   public NaturalNumber(N number){
     this.number = number;
@@ -118,41 +66,43 @@ public class NaturalNumber<N extends Number> {
   }
 
   public boolean isEven() {
-	  return this.number.intValue() % 2 == 0;
+    return this.number.intValue() % 2 == 0;
   }
-
 }
 ```
-
-NaturalNumber test case:
-
+`NaturalNumber` test case:
 ```java
 package com.jos.dem.generics;
 
-import static org.junit.Assert.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import org.junit.Test;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
-public class NaturalNumberTest {
+class NaturalNumberTest {
 
-  @Test(expected=IllegalArgumentException.class)
-  public void shouldNotAcceptNegativeNumbers(){
-    new NaturalNumber(-1);
+  @Test
+  @DisplayName("should throw an exception")
+  void shouldNotAcceptNegativeNumbers(){
+    assertThrows(IllegalArgumentException.class, () -> new NaturalNumber<Number>(-1), "should throw an exception");
   }
 
   @Test
-  public void shouldKnowIfIsEven(){
-    NaturalNumber<Number> naturalNumber = new NaturalNumber<Number>(2);
+  @DisplayName("should know if is even")
+  void shouldKnowIfIsEven(){
+    var naturalNumber = new NaturalNumber<Number>(2);
     assertTrue(naturalNumber.isEven());
   }
 
   @Test
-  public void shouldKnowIfIsNotEven(){
-    NaturalNumber<Integer> naturalNumber = new NaturalNumber<Integer>(1);
+  @DisplayName("should know if is odd")
+  void shouldKnowIfIsOdd(){
+    var naturalNumber = new NaturalNumber<>(1);
     assertFalse(naturalNumber.isEven());
   }
-
+  
 }
 ```
 
