@@ -102,43 +102,42 @@ class NaturalNumberTest {
     var naturalNumber = new NaturalNumber<>(1);
     assertFalse(naturalNumber.isEven());
   }
-  
+
 }
 ```
+As you can see, bounded type parameters help you to restrict the types that can be used as type arguments in a parameterized type. A method that operates on numbers only wants to accept instances of Number or their subclasses. This is what bounded type parameters are for; in that way, you can use some defined methods such as `isEven()` and `intValue()`.
 
-As you can see, bounded type parameters helps you to restrict the types that can be used as type arguments in a parameterized type. A method that operates on numbers might only want to accept instances of Number or its subclasses. This is what bounded type parameters are for, in that way you can use some defined methods such as `isEven()` and `intValue()`.
-
-This is another example using Generics in a class level and in a method level:
-
+This is another example of using Generics at a class level and at a method level:
 ```java
 package com.jos.dem.generics;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.Test;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
-public class BoxTest {
+class BoxTest {
 
   @Test
-  public void shouldCreateAnStringBox(){
+  @DisplayName("should contains a string in the box")
+  void shouldContainsAStringInTheBox(){
     String nickname = "josdem";
-    Box<String> box = new Box<String>();
+    var box = new Box<String>();
     box.set(nickname);
-    assertEquals("java.lang.String", box.getClassTypeName());
+    assertEquals(nickname, box.get());
   }
 
   @Test
-  public void shouldCreateAnIntegerInspection(){
-    Integer integer = new Integer(10);
-    Box<Integer> box = new Box<Integer>();
-    assertEquals("java.lang.Integer", box.getClassNumberName(integer));
+  @DisplayName("should contains an integer in the box")
+  void shouldContainsAnIntegerInTheBox(){
+    var box = new Box<Integer>();
+    box.set(10);
+    assertEquals(10, box.get());
   }
 
 }
 ```
-
 Box implementation:
-
 ```java
 package com.jos.dem.generics;
 
@@ -153,17 +152,8 @@ public class Box<T> {
     this.type = type;
   }
 
-  public String getClassTypeName(){
-    return type.getClass().getName();
-  }
-
-  public <U extends Number> String getClassNumberName(U unit){
-    return unit.getClass().getName();
-  }
-
 }
 ```
-
 **Java Generics Upper Bounded Wildcard**
 
 Upper bounded wildcards are used to relax the restriction on the type of variable in a method. Suppose we want to write a method that will return the sum of numbers in a list.
