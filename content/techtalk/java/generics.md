@@ -53,7 +53,7 @@ Java Generic Type Naming convention helps us understand code easily, and having 
 
 What should you do when you want to restrict the types that can be used as type arguments in a parameterized type? Let's consider the following example:
 ```java
-package com.jos.dem.generics;
+package com.josdem.generics;
 
 public class NaturalNumber<N extends Number> {
   private final N number;
@@ -72,7 +72,7 @@ public class NaturalNumber<N extends Number> {
 ```
 `NaturalNumber` test case:
 ```java
-package com.jos.dem.generics;
+package com.josdem.generics;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -109,7 +109,7 @@ As you can see, bounded type parameters help you to restrict the types that can 
 
 This is another example of using Generics at a class level and at a method level:
 ```java
-package com.jos.dem.generics;
+package com.josdem.generics;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -139,7 +139,7 @@ class BoxTest {
 ```
 Box implementation:
 ```java
-package com.jos.dem.generics;
+package com.josdem.generics;
 
 public class Box<T> {
   private T type;
@@ -158,7 +158,7 @@ public class Box<T> {
 
 Upper-bounded wildcards are used to relax the restriction on the type of variable in a method. Suppose we want to write a method that will return the sum of numbers in a list.
 ```java
-package com.jos.dem.generics;
+package com.josdem.generics;
 
 import java.util.List;
 
@@ -176,7 +176,7 @@ In this way, we can sum a list of Integers or Doubles even though we know that `
 
 Here is the code to test this functionality:
 ```java
-package com.jos.dem.generics;
+package com.josdem.generics;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
