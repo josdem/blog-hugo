@@ -105,7 +105,7 @@ class NaturalNumberTest {
 
 }
 ```
-As you can see, bounded type parameters help you to restrict the types that can be used as type arguments in a parameterized type. A method that operates on numbers only wants to accept instances of Number or their subclasses. This is what bounded type parameters are for; in that way, you can use some defined methods such as `isEven()` and `intValue()`.
+As you can see, bounded type parameters help you to restrict the types that can be used as type arguments in a parameterized type. A method that operates on numbers only wants to accept instances of Number or their subclasses. This is what bounded type parameters are for; in that way, you can use some defined methods such as `isEven()` and `intValue()`.
 
 This is another example of using Generics at a class level and at a method level:
 ```java
@@ -156,8 +156,7 @@ public class Box<T> {
 ```
 **Java Generics Upper Bounded Wildcard**
 
-Upper bounded wildcards are used to relax the restriction on the type of variable in a method. Suppose we want to write a method that will return the sum of numbers in a list.
-
+Upper-bounded wildcards are used to relax the restriction on the type of variable in a method. Suppose we want to write a method that will return the sum of numbers in a list.
 ```java
 package com.jos.dem.generics;
 
@@ -166,68 +165,54 @@ import java.util.List;
 public class CollectionAdder {
 
   public Double sum(List<? extends Number> numbers){
-    double result = 0;
-    for(Number number : numbers){
-      result += number.doubleValue();
-    }
-    return result;
+    return numbers.stream()
+      .mapToDouble(Number::doubleValue)
+      .sum();
   }
-
+    
  }
 ```
-
-In this way, we can sum list of Integers or Doubles even though we know that `List<Integer>` and `List<Double>` are not related, this is when upper bounded wildcard is helpful.
+In this way, we can sum a list of Integers or Doubles even though we know that `List<Integer>` and `List<Double>` are different types; this is when the upper bounded wildcard is helpful.
 
 Here is the code to test this functionality:
-
 ```java
 package com.jos.dem.generics;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
 import java.util.List;
 
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class CollectionAdderTest {
+class CollectionAdderTest {
 
-  @Test
-  public void shouldSumIntegers(){
-    CollectionAdder collectionAdder = new CollectionAdder();
-    List<Integer> numbers = Arrays.asList(new Integer(10), new Integer(11), new Integer(12));
-    Double result = collectionAdder.sum(numbers);
-    assertEquals(new Double(33), result);
-  }
+    private final CollectionAdder collectionAdder = new CollectionAdder();
 
-  @Test
-  public void shouldSumDoubles(){
-    CollectionAdder collectionAdder = new CollectionAdder();
-    List<Double> numbers = Arrays.asList(new Double(10), new Double(11), new Double(12));
-    Double result = collectionAdder.sum(numbers);
-    assertEquals(new Double(33), result);
-  }
+    @Test
+    @DisplayName("should sum integers")
+    void shouldSumIntegers() {
+        var numbers = List.of(10, 11, 12);
+        assertEquals(Double.valueOf(33), collectionAdder.sum(numbers));
+    }
+
+    @Test
+    @DisplayName("should sum doubles")
+    void shouldSumDoubles() {
+        List<Double> numbers = List.of(10.5, 11.2, 12.8);
+        assertEquals(Double.valueOf(34.5), collectionAdder.sum(numbers));
+    }
 
 }
 ```
-To download the code:
-
+To browse the project [here](https://github.com/josdem/java-workshop), to download the project:
 ```bash
 git clone https://github.com/josdem/java-workshop.git
 cd generics
 ```
 
-To run the code:
-
-```bash
-javac ${JAVA_PROGRAM}.java
-java -ea ${JAVA_PROGRAM}
-```
-
 To test the code:
-
 ```bash
 gradle test
 ```
-
 [Return to the main article](/techtalk/java)
