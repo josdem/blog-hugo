@@ -205,7 +205,7 @@ class CollectionAdderTest {
 
 }
 ```
-To browse the project [here](https://github.com/josdem/java-workshop), to download the project:
+To browse the project [here](https://github.com/josdem/java-workshop/tree/main/generics), to download the project:
 ```bash
 git clone https://github.com/josdem/java-workshop.git
 cd generics
